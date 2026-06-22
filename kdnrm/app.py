@@ -5,3 +5,7 @@ def do_something():
 
 def do_more():
     print("BLAH")
+
+
+def do_more_2():
+    print("BLAH")
