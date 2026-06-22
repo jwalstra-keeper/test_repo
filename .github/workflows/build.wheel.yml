@@ -26,15 +26,16 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Build Wheel
-        run: |
-          python3 -m build --wheel
-        shell: bash
 
       - name: Install Dependencies
         run: |
           pip install wheel build
           pip install -r requirements.txt
+
+      - name: Build Wheel
+        run: |
+          python3 -m build --wheel
+        shell: bash
 
       - name: Extract version from __version__.py
         id: get_version
