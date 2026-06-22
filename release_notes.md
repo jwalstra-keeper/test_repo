@@ -1,6 +1,3 @@
-- Bump version to 1.2.6
-- Bump version to 1.2.5
-- Merge pull request #2 from jwalstra-keeper/DR-1_first_branch
-- Fix
-- Bump version to 1.2.4
-- DR-1 This is the first branch
+- Bump version to 1.2.7
+- Merge pull request #3 from jwalstra-keeper/DR-2_someother_change
+- DR-2 Do more changes
