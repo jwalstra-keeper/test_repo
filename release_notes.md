@@ -1,3 +1,3 @@
-- Bump version to 1.2.7
-- Merge pull request #3 from jwalstra-keeper/DR-2_someother_change
-- DR-2 Do more changes
+- Bump version to 1.2.8
+- Merge pull request #4 from jwalstra-keeper/DR-2_someother_change
+- Fix PAT
