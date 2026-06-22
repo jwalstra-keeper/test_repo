@@ -31,6 +31,11 @@ jobs:
           python3 -m build --wheel
         shell: bash
 
+      - name: Install Dependencies
+        run: |
+          pip install wheel build
+          pip install -r requirements.txt
+
       - name: Extract version from __version__.py
         id: get_version
         run: |
