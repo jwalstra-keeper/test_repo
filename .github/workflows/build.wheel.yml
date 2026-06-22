@@ -16,6 +16,8 @@ env:
 jobs:
   build_linux:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 #    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
