@@ -52,7 +52,8 @@ jobs:
 
       - name: "Generate release notes"
         run: |
-          git log main..release --pretty=format:"- %s" > release_notes.md
+          git fetch origin main
+          git log origin/main..release --pretty=format:"- %s" > release_notes.md
           git add release_notes.md
           git commit -m "Add release notes for ${{ steps.bump.outputs.version }}"
           git push origin release
