@@ -43,7 +43,8 @@ jobs:
 
       - name: "Generate release notes"
         run: |
-          git fetch origin main --tags
+          git fetch origin main                                                                                                                
+          git fetch origin --tags  
           IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
           MINOR_BASE_TAG="${MAJOR}.${MINOR}.0"
           git log ${MINOR_BASE_TAG}..origin/main --pretty=format:"- %s" > release_notes.md
