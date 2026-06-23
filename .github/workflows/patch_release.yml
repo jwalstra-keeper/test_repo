@@ -55,5 +55,5 @@ jobs:
       - name: "Rebase release on main"
         run: |
           git checkout release
-          git rebase main
+          git rebase origin/main
           git push origin release --force
