@@ -1,3 +1,4 @@
+- Bump version to 1.2.9
 - sdkflskdldsdkalksalda
 - dfjfksfjsdfk
 - GO GO GO
