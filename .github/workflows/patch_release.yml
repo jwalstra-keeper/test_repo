@@ -50,7 +50,7 @@ jobs:
           git log ${MINOR_BASE_TAG}..origin/main --pretty=format:"- %s" > release_notes.md
           git add release_notes.md
           git commit -m "Add patch to release notes for ${{ steps.bump.outputs.version }}"
-          git push origin release
+          git push origin main
 
       - name: "Rebase release on main"
         run: |
