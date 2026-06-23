@@ -1,17 +1,13 @@
-name: Release
+name: Increment patch version on main
 
 on:
   workflow_dispatch:
     inputs:
-      bump_minor:
-        type: boolean
-        description: Increment minor version and reset patch to 0. Default increments patch only.
-        default: false
 
 jobs:
 
   release:
-    name: Release
+    name: Increment patch version on main
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -24,20 +20,14 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
-      - name: "Bump version"
+      - name: "Bump patch version"
         id: bump
         run: |
           VERSION_FILE="kdnrm/__version__.py"
           CURRENT=$(python3 -c "exec(open('$VERSION_FILE').read()); print(__version__)")
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
-          if [ "${{ github.event.inputs.bump_minor }}" == "true" ]; then
-            MINOR=$((MINOR + 1))
-<<<<<<< Updated upstream:.github/workflows/release.yml
-            PATCH=0
-          else
-            PATCH=$((PATCH + 1))
-          fi
+          PATCH=$((MINOR + 1))
 
           NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           echo "__version__ = '${NEW_VERSION}'" > $VERSION_FILE
@@ -48,25 +38,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add kdnrm/__version__.py
-=======
->>>>>>> Stashed changes:.github/workflows/gateway_release.yml
           git commit -m "Bump version to ${{ steps.bump.outputs.version }}"
           git push origin release
 
       - name: "Generate release notes"
         run: |
           git fetch origin main
-          git log origin/main..release --pretty=format:"- %s" > release_notes.md
+          git fetch origin --tags
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
+          MINOR_BASE_TAG="${MAJOR}.${MINOR}.0"
+          git log ${MINOR_BASE_TAG}..origin/main --pretty=format:"- %s" > release_notes.md
           git add release_notes.md
-          git commit -m "Add release notes for ${{ steps.bump.outputs.version }}"
+          git commit -m "Add patch to release notes for ${{ steps.bump.outputs.version }}"
           git push origin release
-
-      - name: "Merge release into main"
-        run: |
-          git checkout main
-          git pull origin main
-          git merge --no-ff release -m "Release ${{ steps.bump.outputs.version }}: merge release into main"
-          git push origin main
 
       - name: "Rebase release on main"
         run: |
