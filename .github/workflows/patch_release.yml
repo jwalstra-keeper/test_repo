@@ -27,7 +27,7 @@ jobs:
           CURRENT=$(python3 -c "exec(open('$VERSION_FILE').read()); print(__version__)")
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
-          PATCH=$((MINOR + 1))
+          PATCH=$((PATCH + 1))
 
           NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           echo "__version__ = '${NEW_VERSION}'" > $VERSION_FILE
