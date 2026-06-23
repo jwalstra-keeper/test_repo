@@ -52,5 +52,5 @@ jobs:
         run: |
           git fetch origin main
           git checkout release
-          git rebase origin/main
+          git rebase -X ours origin/main
           git push origin release --force
