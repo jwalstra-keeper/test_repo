@@ -1,3 +1,5 @@
+- PATCH
+- Bump version to 1.2.10
 - Bump version to 1.2.9
 - sdkflskdldsdkalksalda
 - dfjfksfjsdfk
