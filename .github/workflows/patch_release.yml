@@ -13,10 +13,10 @@ jobs:
       contents: write
 
     steps:
-      - name: "Checkout release branch"
+      - name: "Checkout main"
         uses: actions/checkout@v4
         with:
-          ref: release
+          ref: main
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
@@ -33,27 +33,24 @@ jobs:
           echo "__version__ = '${NEW_VERSION}'" > $VERSION_FILE
           echo "version=${NEW_VERSION}" >> $GITHUB_OUTPUT
 
-      - name: "Commit version bump"
+      - name: "Generate release notes"
+        run: |
+          git fetch origin --tags
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
+          MINOR_BASE_TAG=$(git tag --list "${MAJOR}.${MINOR}.*" | sort -V | head -1)
+          git log ${MINOR_BASE_TAG}..HEAD --pretty=format:"- %s" > release_notes.md
+
+      - name: "Commit and push to main"
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add kdnrm/__version__.py
+          git add kdnrm/__version__.py release_notes.md
           git commit -m "Bump version to ${{ steps.bump.outputs.version }}"
-          git push origin release
-
-      - name: "Generate release notes"
-        run: |
-          git fetch origin main                                                                                                                
-          git fetch origin --tags  
-          IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
-          MINOR_BASE_TAG=$(git tag --list "${MAJOR}.${MINOR}.*" | sort -V | head -1)
-          git log ${MINOR_BASE_TAG}..origin/main --pretty=format:"- %s" > release_notes.md
-          git add release_notes.md
-          git commit -m "Add patch to release notes for ${{ steps.bump.outputs.version }}"
           git push origin main
 
       - name: "Rebase release on main"
         run: |
+          git fetch origin main
           git checkout release
           git rebase origin/main
           git push origin release --force
