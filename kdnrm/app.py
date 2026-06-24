@@ -13,3 +13,7 @@ def do_more_2():
 
 def more_stuff():
     pass
+
+
+def more_stuff_2():
+    pass
