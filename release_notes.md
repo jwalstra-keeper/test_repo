@@ -1,1 +1,2 @@
-- Check if not on root
+- Bump version to 1.6.0
+- Doing a test
