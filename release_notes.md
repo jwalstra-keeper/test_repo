@@ -1,2 +1,3 @@
+- Bump version to 1.4.0
+- Add release notes for 1.3.0
 - Bump version to 1.3.0
-- FEATURE
