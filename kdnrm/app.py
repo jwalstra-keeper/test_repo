@@ -9,3 +9,7 @@ def do_more():
 
 def do_more_2():
     print("BLAH")
+
+
+def more_stuff():
+    pass
