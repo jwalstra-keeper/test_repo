@@ -17,3 +17,6 @@ def more_stuff():
 
 def more_stuff_2():
     pass
+
+def more_stuff_3():
+    pass
