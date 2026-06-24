@@ -38,6 +38,7 @@ jobs:
           git fetch origin --tags
           IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
           PREV_TAG="${MAJOR}.${MINOR}.$((PATCH - 1))"
+          printf "\n" >> release_notes.md
           git log ${PREV_TAG}..HEAD --pretty=tformat:"- %s" >> release_notes.md
 
       - name: "Commit and push to main"
