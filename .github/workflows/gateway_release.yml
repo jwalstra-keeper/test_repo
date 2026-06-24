@@ -24,6 +24,14 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
+      - name: "Check release is based on main"
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "branch `release` is not up to date with `main`. Rebase `release` on `main` before running this workflow."
+            exit 1
+          fi
+
       - name: "Bump version"
         id: bump
         run: |
