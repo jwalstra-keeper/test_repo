@@ -1,2 +1,1 @@
-- Bump version to 1.6.0
-- Doing a test
+- Update GHA
