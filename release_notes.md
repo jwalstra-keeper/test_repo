@@ -1,2 +1,1 @@
-- Bump version to 1.5.0
-- This is a test
+- Check if not on root
