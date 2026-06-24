@@ -37,12 +37,8 @@ jobs:
         run: |
           git fetch origin --tags
           IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.bump.outputs.version }}"
-          PREV_MINOR=$((MINOR - 1))
-          BASE_TAG=$(git tag --list "${MAJOR}.${PREV_MINOR}.*" | sort -V | tail -1)
-          if [ -z "$BASE_TAG" ]; then
-            BASE_TAG=$(git tag --list "${MAJOR}.${MINOR}.*" | sort -V | head -1)
-          fi
-          git log ${BASE_TAG}..HEAD --pretty=format:"- %s" > release_notes.md
+          PREV_TAG="${MAJOR}.${MINOR}.$((PATCH - 1))"
+          git log ${PREV_TAG}..HEAD --pretty=format:"- %s" >> release_notes.md
 
       - name: "Commit and push to main"
         run: |
